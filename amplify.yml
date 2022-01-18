@@ -1,0 +1,17 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - npm ci
+    build:
+       commands:
+        - if [ "${AWS_BRANCH}" = "main" ]; then npm run build-main; fi
+        - if [ "${AWS_BRANCH}" = "development" ]; then npm run buikd-development; fi
+  artifacts:
+    baseDirectory: build
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
